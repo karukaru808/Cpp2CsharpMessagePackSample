@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class MsgPackSampleFromUdp : MonoBehaviour
 {
+    [SerializeField] private MsgPackFormatFamily.FormatFamily formatFamily = MsgPackFormatFamily.FormatFamily.Array;
     [SerializeField] private uint port = 1234;
 
     private UdpClient udpClient;
@@ -51,6 +52,13 @@ public class MsgPackSampleFromUdp : MonoBehaviour
 
     private async Task Receive(CancellationToken token)
     {
+        IMsgPackSampleData sampleData = formatFamily switch
+        {
+            MsgPackFormatFamily.FormatFamily.Array => new MsgPackArraySampleData(),
+            MsgPackFormatFamily.FormatFamily.Map => new MsgPackMapSampleData(),
+            _ => throw new ArgumentOutOfRangeException()
+        };
+
         while (!token.IsCancellationRequested)
         {
             var data = await udpClient.ReceiveAsync();
@@ -61,12 +69,13 @@ public class MsgPackSampleFromUdp : MonoBehaviour
 
             try
             {
-                var testData = MsgPackSampleData.Deserialize(data.Buffer);
-                Debug.Log($"{testData.Compact}, {testData.Schema}");
+                sampleData = sampleData.Deserialize(data.Buffer);
+                Debug.Log($"{sampleData.Compact}, {sampleData.Schema}");
             }
             catch (Exception e)
             {
-                // ignored
+                // parse error
+                Debug.LogError("Parse Error!");
             }
         }
     }

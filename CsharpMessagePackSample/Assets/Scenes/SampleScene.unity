@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9feef27e7a4666d4697ec7de71d737ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  formatFamily: 0
   port: 1234
 --- !u!4 &544784687
 Transform:
@@ -359,7 +360,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1103204231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,6 +373,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e86f1b1ec881c045811748f21d5d32b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  formatFamily: 0
   ipAddress: 127.0.0.1
   port: 1234
 --- !u!4 &1103204232
