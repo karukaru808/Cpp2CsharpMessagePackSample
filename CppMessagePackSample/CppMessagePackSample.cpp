@@ -1,20 +1,72 @@
-﻿// CppMessagePackSample.cpp : このファイルには 'main' 関数が含まれています。プログラム実行の開始と終了がそこで行われます。
-//
+﻿#include <iostream>
+#include <ws2tcpip.h>
+#include "mpack-amalgamation-1.1/src/mpack/mpack.h"
 
-#include <iostream>
+#define IP_ADDR "127.0.0.1"
+#define PORT 1234
+
+bool Serialize(char**, size_t*);
+bool SendData(const char*, size_t);
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	char* data;
+	size_t size;
+
+	auto result = Serialize(&data, &size);
+	if (result)
+	{
+		result = SendData(data, size);
+	}
+
+	printf("Result: %d", result);
 }
 
-// プログラムの実行: Ctrl + F5 または [デバッグ] > [デバッグなしで開始] メニュー
-// プログラムのデバッグ: F5 または [デバッグ] > [デバッグの開始] メニュー
+bool Serialize(char** data, size_t* size)
+{
+	mpack_writer_t writer;
+	mpack_writer_init_growable(&writer, data, size);
 
-// 作業を開始するためのヒント: 
-//    1. ソリューション エクスプローラー ウィンドウを使用してファイルを追加/管理します 
-//   2. チーム エクスプローラー ウィンドウを使用してソース管理に接続します
-//   3. 出力ウィンドウを使用して、ビルド出力とその他のメッセージを表示します
-//   4. エラー一覧ウィンドウを使用してエラーを表示します
-//   5. [プロジェクト] > [新しい項目の追加] と移動して新しいコード ファイルを作成するか、[プロジェクト] > [既存の項目の追加] と移動して既存のコード ファイルをプロジェクトに追加します
-//   6. 後ほどこのプロジェクトを再び開く場合、[ファイル] > [開く] > [プロジェクト] と移動して .sln ファイルを選択します
+	mpack_build_array(&writer);
+	mpack_write_bool(&writer, true);
+	mpack_write_uint(&writer, 0);
+	mpack_complete_array(&writer);
+
+	if (mpack_writer_destroy(&writer) != mpack_ok) {
+		printf("An error occurred encoding the data!\n");
+		return false;
+	}
+
+	printf("Serialized.\r\n");
+
+	return true;
+}
+
+bool SendData(const char* data, const size_t size)
+{
+	WSAData wsaData;
+	auto result = WSAStartup(WINSOCK_VERSION, &wsaData);
+	if (result != NO_ERROR)
+	{
+		return false;
+	}
+
+	int sock = socket(AF_INET, SOCK_DGRAM, 0);
+	sockaddr_in sock_addr{ AF_INET, htons(PORT) };
+	inet_pton(AF_INET, IP_ADDR, &sock_addr.sin_addr.s_addr);
+
+	printf("Destination IP: %s, Port: %d\r\n", IP_ADDR, PORT);
+
+	for (auto i = 0; i < 1000; i++)
+	{
+		printf("Sending. SendCount: %3d\r\n", i);
+		sendto(sock, data, size, 0, (sockaddr*)&sock_addr, sizeof(sock_addr));
+
+		Sleep(50);
+	}
+
+	closesocket(sock);
+	WSACleanup();
+
+	return true;
+}
