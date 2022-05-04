@@ -145,9 +145,15 @@
   <ItemGroup>
     <ClCompile Include="CppMessagePackSample.cpp" />
     <ClCompile Include="mpack-amalgamation-1.1\src\mpack\mpack.c" />
+    <ClCompile Include="MsgPackArraySample.cpp" />
+    <ClCompile Include="MsgPackMapSample.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mpack-amalgamation-1.1\src\mpack\mpack.h" />
+    <ClInclude Include="MsgPackArraySample.h" />
+    <ClInclude Include="MsgPackMapSample.h" />
+    <ClInclude Include="IMsgPackSample.h" />
+    <ClInclude Include="MsgPackSampleData.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

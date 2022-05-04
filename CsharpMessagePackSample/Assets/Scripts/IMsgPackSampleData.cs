@@ -1,6 +1,4 @@
-﻿using MessagePack;
-
-public interface IMsgPackSampleData
+﻿public interface IMsgPackSampleData
 {
     public bool Compact { get; set; }
     public int Schema { get; set; }
