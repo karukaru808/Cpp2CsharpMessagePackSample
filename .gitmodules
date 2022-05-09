@@ -1,0 +1,3 @@
+[submodule "CppMessagePackSample/msgpack-c"]
+	path = CppMessagePackSample/msgpack-c
+	url = git@github.com:msgpack/msgpack-c.git
