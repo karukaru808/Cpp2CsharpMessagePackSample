@@ -88,6 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\boost\include\boost-1_79;msgpack-c\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -144,12 +145,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CppMessagePackSample.cpp" />
-    <ClCompile Include="mpack-amalgamation-1.1\src\mpack\mpack.c" />
     <ClCompile Include="MsgPackArraySample.cpp" />
     <ClCompile Include="MsgPackMapSample.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="mpack-amalgamation-1.1\src\mpack\mpack.h" />
     <ClInclude Include="MsgPackArraySample.h" />
     <ClInclude Include="MsgPackMapSample.h" />
     <ClInclude Include="IMsgPackSample.h" />

@@ -1,11 +1,13 @@
 ﻿#include "MsgPackMapSample.h"
-#include "mpack-amalgamation-1.1/src/mpack/mpack.h"
+#include <msgpack.hpp>
 #include <iostream>
 
 
 size_t MsgPackMapSample::Serialize(char** serialized_data)
 {
-	size_t size;
+	size_t size = 0;
+
+	/*
 	mpack_writer_t writer;
 
 	mpack_writer_init_growable(&writer, serialized_data, &size);
@@ -23,12 +25,13 @@ size_t MsgPackMapSample::Serialize(char** serialized_data)
 	}
 
 	std::cout << "Serialized Map Format." << std::endl;
-
+	*/
 	return size;
 }
 
 bool MsgPackMapSample::Deserialize(const char* data, const size_t size)
 {
+	/*
 	mpack_tree_t tree;
 	mpack_tree_init_data(&tree, data, size);
 	mpack_tree_parse(&tree);
@@ -37,6 +40,7 @@ bool MsgPackMapSample::Deserialize(const char* data, const size_t size)
 
 	sample_data.compact = mpack_node_bool(mpack_node_map_cstr(root, "compact"));
 	sample_data.schema = mpack_node_int(mpack_node_map_cstr(root, "schema"));
+	*/
 	return true;
 }
 

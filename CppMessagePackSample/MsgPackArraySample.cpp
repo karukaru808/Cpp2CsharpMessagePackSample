@@ -1,11 +1,12 @@
 #include "MsgPackArraySample.h"
-#include "mpack-amalgamation-1.1/src/mpack/mpack.h"
+#include <msgpack.hpp>
 #include <iostream>
 
 
 size_t MsgPackArraySample::Serialize(char** serialized_data)
 {
-	size_t size;
+	size_t size = 0;
+	/*
 	mpack_writer_t writer;
 
 	mpack_writer_init_growable(&writer, serialized_data, &size);
@@ -21,12 +22,13 @@ size_t MsgPackArraySample::Serialize(char** serialized_data)
 	}
 
 	std::cout << "Serialized Array Format." << std::endl;
-
+	*/
 	return size;
 }
 
 bool MsgPackArraySample::Deserialize(const char* data, size_t size)
 {
+	/*
 	mpack_tree_t tree;
 	mpack_tree_init_data(&tree, data, size);
 	mpack_tree_parse(&tree);
@@ -35,5 +37,6 @@ bool MsgPackArraySample::Deserialize(const char* data, size_t size)
 
 	sample_data.compact = mpack_node_bool(mpack_node_array_at(root, 0));
 	sample_data.schema = mpack_node_int(mpack_node_array_at(root, 1));
+	*/
 	return true;
 }
